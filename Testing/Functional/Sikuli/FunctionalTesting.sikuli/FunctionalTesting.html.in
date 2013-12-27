@@ -1,0 +1,295 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>FunctionalTesting.sikuli\FunctionalTesting.sikuli</h2> <a href="FunctionalTesting.sikuli\FunctionalTesting.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">def</span> wait_click(image):
+    <span class="skw">wait</span>(image,<span class="dig">30</span>)
+    <span class="skw">click</span>(image)
+
+<span class="kw">def</span> wait_type(image,text):
+    <span class="skw">wait</span>(image,<span class="dig">30</span>)
+    <span class="skw">type</span>(image,text)
+
+<span class="kw">def</span> openCreateProblems():
+    wait_click(Pattern(<img src="Newprdblem-2.png" />).similar(<span class="dig">0.60</span>))
+    <span class="kw">if</span> exists(<img src="EltherProble-1.png" />):
+      wait_click(<img src="EltherProble-1.png" />)
+
+<span class="kw">import</span> sys
+</span>addImagePath(<span class="str">"${sikuli}"</span>)
+<span class="skw">wait</span>(<span class="dig">30</span>)
+<span class="kw">if</span> exists(<img src="1326480962420.png" />):
+  <span class="skw">doubleClick</span>(<img src="1326480962420.png" />)
+<span class="kw">else</span>:
+  openApp(<span class="str">r'${VITALS_MANAGER_EXECUTABLE} /port=${VISTA_TCP_PORT} /server=${VISTA_TCP_HOST}  /ccow=disable'</span>)
+wait_type(<img src="AccessCcndc.png" />,<span class="str">"fakedoc1"</span>)
+wait_type(<img src="VerifyCcndc.png" />,<span class="str">"1Doc!@#$"</span>)
+wait_click(<img src="1320870115117.png" />)
+<span class="skw">wait</span>(Pattern(<img src="Templates1Va.png" />).targetOffset(<span class="dig">0</span>,-<span class="dig">14</span>),<span class="dig">10</span>)
+wait_click(Pattern(<img src="Templates1Va.png" />).targetOffset(<span class="dig">0</span>,-<span class="dig">14</span>))
+wait_click(<img src="NewTemplate-3.png" />)
+wait_type(<img src="TemplateName-4.png" />,<span class="str">"ALLVITALS"</span>)
+wait_click(<img src="1320870205151.png" />)
+wait_click(<img src="dd.png" />)
+<span class="skw">dragDrop</span>(<img src="BLUUDPRESSUR-2.png" />,<img src="WEIGHT.png" />)
+wait_click(<img src="1320870205151.png" />)
+wait_click(<img src="1320870326408.png" />)
+wait_click(<img src="1320870337758.png" />)
+wait_click(<img src="File-2.png" />)
+wait_click(<img src="Exit-2.png" />)
+<span class="kw">if</span> exists(<img src="1333398109508.png" />):
+  <span class="skw">doubleClick</span>(<img src="1333398109508.png" />)
+<span class="kw">else</span>:
+  openApp(<span class="str">r'${CPRS_EXECUTABLE} P=${VISTA_TCP_PORT} S=${VISTA_TCP_HOST} ccow=disable'</span>)
+wait_type(<img src="AccessCcndc-4.png" />,<span class="str">"fakenurse1"</span>)
+wait_type(<img src="VerifyCcndc-4.png" />,<span class="str">"1Nur!@#$"</span>)
+wait_click(<img src="1320860138742-2.png" />)
+<span class="skw">wait</span>(<img src="PatientsAllP.png" />,<span class="dig">20</span>)
+wait_click(<img src="EarterDavidJ-1.png" />)
+wait_click(<img src="1320860179799-2.png" />)
+wait_click(<img src="VisitNotSele.png" />)
+wait_type(Pattern(<img src="VisitLocatio.png" />).targetOffset(-<span class="dig">94</span>,<span class="dig">7</span>),<span class="str">"VISTA HEALTH CARE"</span>)
+wait_click(<img src="1320860240255-1.png" />)
+wait_click(<img src="Notes-1.png" />)
+wait_click(<img src="Templates-1.png" />)
+wait_click(Pattern(<img src="OptionsATIEN.png" />).targetOffset(<span class="dig">0</span>,-<span class="dig">11</span>))
+wait_click(<img src="CreateNewSha.png" />)
+<span class="skw">wait</span>(<img src="lAllowLungLi.png" />,<span class="dig">10</span>)
+<span class="skw">type</span>(<span class="str">"OfficeVisit"</span>)
+wait_type(Pattern(<img src="lemplateQuil-1.png" />).targetOffset(-<span class="dig">49</span>,<span class="dig">9</span>),<span class="str">"|PATIENT NAME|\n|PATIENT DATE OF BIRTH|,|PATIENT AGE|\n|PATIENT HEIGHT|\n|PATIENT WEIGHT|\n|PULSE|\n|BLOOD PRESSURE|\n|TEMPERATURE|\n|RESPIRATION|\n|RECENT MEDICATIONS|\n|ALLERGIES/ADR|\n|VA-WRIISC ACTIVE PROBLEMS|"</span>)
+wait_click(<img src="Apply-1.png" />)
+wait_click(<img src="1320939708563-1.png" />)
+wait_click(<img src="EuverSheet.png" />)
+wait_click(Pattern(<img src="Vntals-1.png" />).targetOffset(<span class="dig">0</span>,<span class="dig">10</span>))
+<span class="skw">wait</span>(Pattern(<img src="EWtalsLite.png" />).similar(<span class="dig">0.40</span>),<span class="dig">10</span>)
+wait_click(<img src="Enteritals-1.png" />)
+wait_type(<img src="Pressure-1.png" />,<span class="str">"120/75"</span>)
+wait_type(<img src="lnHeight-1.png" />,<span class="str">"58"</span>)
+wait_click(<img src="El-1.png" />)
+wait_click(<img src="Unepain-1.png" />)
+wait_type(<img src="Pulse-1.png" />,<span class="str">"124"</span>)
+wait_type(<img src="Respiratipn-1.png" />,<span class="str">"25"</span>)
+wait_type(<img src="TemperatureF-1.png" />,<span class="str">"98.5"</span>)
+wait_type(<img src="rbWeight-1.png" />,<span class="str">"85"</span>)
+wait_click(<img src="SaveAndExit-1.png" />)
+wait_click(Pattern(<img src="X5-1.png" />).similar(<span class="dig">0.73</span>))
+wait_click(Pattern(<img src="X5-1.png" />).similar(<span class="dig">0.75</span>))
+wait_click(Pattern(<img src="FileHelpCART.png" />).targetOffset(-<span class="dig">20</span>,-<span class="dig">24</span>))
+wait_click(<img src="Exit-4.png" />)
+wait_click(<img src="itas985F124.png" />)
+wait_click(<img src="EnteredinErr.png" />)
+wait_click(<img src="RxP19H.png" />)
+wait_click(<img src="lncurrectEea.png" />)
+wait_click(<img src="MarkasEntere.png" />)
+wait_click(<img src="Keg.png" />)
+wait_click(<img src="Enteritals.png" />)
+wait_type(<img src="Pressure-2.png" />,<span class="str">"120/60"</span>)
+wait_click(<img src="SaveAndExit.png" />)
+wait_click(Pattern(<img src="FileHelpCART.png" />).targetOffset(-<span class="dig">20</span>,-<span class="dig">24</span>))
+wait_click(<img src="Exit-4.png" />)
+wait_click(Pattern(<img src="Prdblems-2.png" />).exact())
+openCreateProblems()
+wait_type(<img src="EnterTermtdS-2.png" />, <span class="str">"SORE THROAT"</span>)
+wait_click(Pattern(<img src="1321021526660-2.png" />).similar(<span class="dig">0.60</span>))
+wait_click(<img src="1324567405141-1.png" />)
+wait_click(<img src="1321021526660-2.png" />)
+openCreateProblems()
+wait_type(<img src="EnterTermtdS-2.png" />, <span class="str">"EAR PAIN"</span>)
+wait_click(Pattern(<img src="1321021526660-2.png" />).similar(<span class="dig">0.60</span>))
+wait_click(<img src="1324567405141-1.png" />)
+wait_click(<img src="1321021526660-2.png" />)
+openCreateProblems()
+wait_type(<img src="EnterTermtdS-2.png" />, <span class="str">"MILD DIFFICULTY BREATHING"</span>)
+wait_click(Pattern(<img src="1321021526660-2.png" />).similar(<span class="dig">0.60</span>))
+wait_click(<img src="1324567405141-1.png" />)
+wait_click(<img src="1321021526660-2.png" />)
+wait_click(Pattern(<img src="CoverSheet-1.png" />).similar(<span class="dig">0.80</span>))
+<span class="skw">rightClick</span>(Pattern(<img src="AllergnesAdv-1.png" />).targetOffset(<span class="dig">0</span>,<span class="dig">11</span>))
+wait_click(<img src="Enternewalle-4.png" />)
+wait_type(<img src="Searchfur-3.png" />,<span class="str">"penicillin"</span>)
+wait_click(<img src="1320869034238-3.png" />)
+wait_click(Pattern(<img src="PENIEILLIN-3.png" />).similar(<span class="dig">0.90</span>))
+wait_click(<img src="EK-3.png" />)
+wait_type(<img src="SidnsSvmptdm.png" />,<span class="str">"SWELLING\r"</span>)
+wait_click(<img src="Tl-3.png" />)
+wait_click(<img src="Pharmacplpgi-3.png" />)
+wait_click(<img src="Histprical-3.png" />)
+wait_click(<img src="EK-3.png" />)
+<span class="skw">rightClick</span>(Pattern(<img src="AllergnesAdv-1.png" />).targetOffset(<span class="dig">0</span>,<span class="dig">11</span>))
+wait_click(<img src="Enternewalle-4.png" />)
+wait_type(<img src="Searchfur-3.png" />,<span class="str">"peanuts"</span>)
+wait_click(<img src="1320869034238-3.png" />)
+wait_click(Pattern(<img src="VPEANUTS-1.png" />).similar(<span class="dig">0.90</span>))
+wait_click(<img src="EK-3.png" />)
+wait_type(<img src="SidnsSvmptdm.png" />,<span class="str">"HIVES\r"</span>)
+wait_click(<img src="Tl-3.png" />)
+wait_click(<img src="Allergy.png" />)
+wait_click(<img src="Histprical-3.png" />)
+wait_click(<img src="EK-3.png" />)
+wait_click(Pattern(<img src="FileEditIART.png" />).targetOffset(-<span class="dig">22</span>,-<span class="dig">12</span>))
+wait_click(<img src="Exit-3.png" />)
+<span class="kw">if</span> exists(<img src="1333398109508.png" />):
+  <span class="skw">doubleClick</span>(<img src="1333398109508.png" />)
+<span class="kw">else</span>:
+  openApp(<span class="str">r'${CPRS_EXECUTABLE} P=${VISTA_TCP_PORT} S=${VISTA_TCP_HOST} ccow=disable'</span>)
+wait_type(<img src="AccessCcndc-4.png" />,<span class="str">"fakedoc1"</span>)
+wait_type(<img src="VerifyCcndc-4.png" />,<span class="str">"1Doc!@#$"</span>)
+wait_click(<img src="1320860138742-2.png" />)
+<span class="skw">wait</span>(<img src="PatientsAllP.png" />,<span class="dig">10</span>)
+wait_click(<img src="EarterDavidJ-1.png" />)
+wait_click(<img src="1320860179799-2.png" />)
+wait_click(<img src="VisitNotSele-1.png" />)
+wait_type(Pattern(<img src="VisitLocatio.png" />).targetOffset(-<span class="dig">94</span>,<span class="dig">7</span>),<span class="str">"VISTA HEALTH CARE"</span>)
+wait_click(<img src="1320860240255-1.png" />)
+wait_click(Pattern(<img src="Prdblems.png" />).exact())
+openCreateProblems()
+wait_type(<img src="EnterTermtdS.png" />, <span class="str">"OTITIS MEDIA"</span>)
+wait_click(<img src="Search.png" />)
+wait_click(<img src="IInsnenilier.png" />)
+wait_click(<img src="1321021526660.png" />)
+openCreateProblems()
+wait_type(<img src="EnterTermtdS.png" />, <span class="str">"bronchitis"</span>)
+wait_click(<img src="Search.png" />)
+wait_click(<img src="Acutebrcnchi.png" />)
+wait_click(<img src="1321021526660.png" />)
+wait_click(Pattern(<img src="Unspecifiedc.png" />).targetOffset(-<span class="dig">104</span>,<span class="dig">0</span>))
+<span class="skw">wait</span>(<img src="1323098707432.png" />,<span class="dig">2</span>)
+<span class="skw">rightClick</span>(<img src="1323098707432.png" />)
+wait_click(<img src="Remcve.png" />)
+wait_click(<img src="Addccmment.png" />)
+wait_type(<img src="Enteranew.png" />,<span class="str">"Entered In Error"</span>)
+wait_click(<img src="1323095823892.png" />)
+wait_click(<img src="1323095846238.png" />)
+wait_click(<img src="EuverSheet.png" />)
+<span class="skw">rightClick</span>(<img src="Peanuts.png" />)
+wait_click(<img src="Markselected.png" />)
+wait_click(<img src="QK.png" />)
+wait_click(<img src="1321045230364.png" />)
+<span class="skw">rightClick</span>(<img src="Denicillin.png" />)
+wait_click(<img src="Markselected.png" />)
+wait_click(<img src="QK.png" />)
+wait_click(<img src="1321045230364.png" />)
+<span class="skw">rightClick</span>(Pattern(<img src="AllergnesAdv-2.png" />).targetOffset(<span class="dig">0</span>,<span class="dig">11</span>))
+wait_click(<img src="Enternewalle-5.png" />)
+wait_type(<img src="Searchfur-4.png" />,<span class="str">"peanuts"</span>)
+wait_click(<img src="1320869034238-4.png" />)
+wait_click(Pattern(<img src="VPEANUTS-2.png" />).similar(<span class="dig">0.90</span>))
+wait_click(<img src="EK-4.png" />)
+wait_type(<img src="SidnsSvmptdm-1.png" />,<span class="str">"ANAPHYLAXIS\r"</span>)
+wait_click(<img src="Tl-4.png" />)
+wait_click(<img src="Allergy-1.png" />)
+wait_click(<img src="Histprical-4.png" />)
+wait_click(<img src="EK-4.png" />)
+wait_click(<img src="Orders.png" />)
+wait_click(<img src="STFIEPTEST.png" />)
+wait_click(<img src="SpecimenUthe.png" />)
+wait_type(<img src="24HHUHINE1U1.png" />,<span class="str">"SPUTUM"</span>)
+wait_click(Pattern(<img src="1321021526660.png" />).similar(<span class="dig">0.60</span>))
+wait_click(<img src="AcceptUrder.png" />)
+<span class="skw">rightClick</span>(<img src="LabSTHEPTDZY.png" />)
+wait_click(<img src="Sign.png" />)
+wait_type(Pattern(<img src="ElectronicSi-1.png" />).targetOffset(-<span class="dig">59</span>,<span class="dig">8</span>),<span class="str">"ROBA123"</span>)
+wait_click(<img src="1322846497936.png" />)
+wait_click(<img src="Labs.png" />)
+<span class="skw">wait</span>(<span class="dig">5</span>)
+wait_click(Pattern(<img src="Notes-1.png" />).similar(<span class="dig">0.80</span>))
+wait_click(<img src="NewNate.png" />)
+wait_type(<img src="ProgressNate.png" />,<span class="str">"GENERAL  &lt;SCI GENERAL NOTE&gt;"</span>)
+wait_click(<img src="1321292529827.png" />)
+wait_click(<img src="Templates-1.png" />)
+wait_click(Pattern(<img src="ESharedTempl.png" />).targetOffset(-<span class="dig">63</span>,-<span class="dig">2</span>))
+<span class="skw">doubleClick</span>(<img src="EUfficeisit.png" />)
+wait_type(<img src="l660Acutebzn.png" />,<span class="str">"\nUpper repiratory viral infection with mild bronchitis\nAvoid strenuous activity until lungs clear.  Use inhaler as needed.\n\n"</span>)
+<span class="skw">rightClick</span>(<img src="untillungscl.png" />)
+wait_click(<img src="SavewithoutS.png" />)
+<span class="skw">rightClick</span>(<img src="untillungscl.png" />)
+wait_click(Pattern(<img src="EditProgress-1.png" />).targetOffset(<span class="dig">0</span>,-<span class="dig">12</span>))
+wait_type(<img src="untillungscl.png" />,<span class="str">"Strep Test performed to rule out.\n"</span>)
+<span class="skw">rightClick</span>(<img src="untillungscl.png" />)
+wait_click(<img src="SignNoteNow.png" />)
+wait_click(<img src="1321996381368.png" />)
+wait_click(<img src="1321996412868.png" />)
+wait_type(<img src="SignatureCod.png" />, <span class="str">"ROBA123"</span>)
+wait_click(<img src="1322855781138.png" />)
+<span class="skw">rightClick</span>(<img src="esROBERTALEX.png" />)
+wait_click(<img src="Makelddendum.png" />)
+<span class="skw">type</span>(<span class="str">"Strep Test Negative"</span>)
+wait_click(Pattern(<img src="FileEditIART.png" />).targetOffset(-<span class="dig">22</span>,-<span class="dig">12</span>))
+wait_click(<img src="Exit-3.png" />)
+<span class="skw">wait</span>(<img src="ReviewSiqnCh.png" />,<span class="dig">10</span>)
+wait_type(Pattern(<img src="ElectronicSi-1.png" />).targetOffset(-<span class="dig">59</span>,<span class="dig">8</span>),<span class="str">"ROBA123"</span>)
+wait_click(<img src="1321292798423.png" />)
+wait_click(<img src="1321996381368.png" />)
+wait_click(<img src="1321996412868.png" />)
+sys.exit(<span class="dig">0</span>)
+</pre>
+</body>
+</html>
