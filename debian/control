@@ -1,21 +1,23 @@
 Source: VistA-FOIA
-Section: science
-Priority: extra
-Build-Depends: debhelper (>= 9),
- fis-gtm, python, cmake (>= 2.8.5)
-Standards-Version: 3.9.3
 Maintainer: Debian Med Packaging Team <debian-med-packaging@lists.alioth.debian.org>
-DM-Upload-Allowed: yes
 Uploaders: Andreas Tille <tille@debian.org>,
            Thorsten Alteholz <debian@alteholz.de>,
            Luis Ibanez <luis.ibanez@kitware.com>
-Homepage: http://www.osehra.org
+Section: science
+Priority: extra
+Build-Depends: debhelper (>= 9),
+               fis-gtm,
+               python,
+               cmake (>= 2.8.5)
+Standards-Version: 3.9.5
 Vcs-Browser: http://svn.debian.org/wsvn/debian-med/trunk/packages/fis-gtm/trunk
 Vcs-Svn: svn://svn.debian.org/debian-med/trunk/packages/fis-gtm/trunk
+Homepage: http://www.osehra.org
 
 Package: VistA-FOIA
 Architecture: amd64 i386
-Depends: fis-gtm, cmake (>= 2.8.5)
+Depends: fis-gtm,
+         cmake (>= 2.8.5)
 Provides: VistA-FOIA
 Description: package for VistA EHR
  VistA: the Veterans Health Information Systems and Technology Architecture.
