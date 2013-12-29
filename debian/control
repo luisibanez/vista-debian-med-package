@@ -1,4 +1,4 @@
-Source: VistA-FOIA
+Source: vista-foia
 Maintainer: Debian Med Packaging Team <debian-med-packaging@lists.alioth.debian.org>
 Uploaders: Andreas Tille <tille@debian.org>,
            Thorsten Alteholz <debian@alteholz.de>,
@@ -14,7 +14,7 @@ Vcs-Browser: http://svn.debian.org/wsvn/debian-med/trunk/packages/fis-gtm/trunk
 Vcs-Svn: svn://svn.debian.org/debian-med/trunk/packages/fis-gtm/trunk
 Homepage: http://www.osehra.org
 
-Package: VistA-FOIA
+Package: vista-foia
 Architecture: amd64 i386
 Depends: fis-gtm,
          cmake (>= 2.8.5)
