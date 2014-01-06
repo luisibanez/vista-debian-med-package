@@ -10,8 +10,8 @@ Build-Depends: debhelper (>= 9),
                python,
                cmake (>= 2.8.5)
 Standards-Version: 3.9.5
-Vcs-Browser: http://svn.debian.org/wsvn/debian-med/trunk/packages/fis-gtm/trunk
-Vcs-Svn: svn://svn.debian.org/debian-med/trunk/packages/fis-gtm/trunk
+Vcs-Browser: http://svn.debian.org/wsvn/debian-med/trunk/packages/vista/trunk
+Vcs-Svn: svn://svn.debian.org/debian-med/trunk/packages/vista/trunk
 Homepage: http://www.osehra.org
 
 Package: vista-foia
@@ -29,5 +29,6 @@ Description: package for VistA EHR
  Apache 2.0 License for all subsequent contributions to be integrated
  with the VisA code base.
  .
- VistA is implemented in M/MUMPS, and on Linux depends on the GT.M
- compiler and database being available.
+ VistA is implemented in M/MUMPS, and on Linux it depends on the GT.M
+ compiler and database being available (this is provided by the package
+ fis-gtm).

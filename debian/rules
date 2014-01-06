@@ -5,8 +5,8 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-VISTAINSTANCEDIR=debian/usr/share/VistA-FOIA
-GTM_INSTALL_DIR=/usr/lib/fis-gtm/V5.5-000_x86_64
+VISTAINSTANCEDIR=debian/usr/share/vista-foia
+GTM_INSTALL_DIR=/usr/lib/fis-gtm/V6.0-003_x86_64
 VISTA_GLOBALS_DIR=$(VISTAINSTANCEDIR)/g
 VISTA_ROUTINES_DIR=$(VISTAINSTANCEDIR)/r
 GTMPROFILE=$(GTM_INSTALL_DIR)/gtmprofile
@@ -29,7 +29,7 @@ override_dh_auto_install:
 	mkdir -p $(VISTAINSTANCEDIR)/g
 	mkdir -p $(VISTAINSTANCEDIR)/inet
 	mkdir -p $(VISTAINSTANCEDIR)/inet/Logs
-	gtm_dist=/usr/lib/fis-gtm/V5.5-000_x86_64
+	gtm_dist=$(GTM_INSTALL_DIR)
 	gtmprofilefile=$(gtm_dist)/gtmprofile
 	source $(gtmprofilefile)
 	gtmgbldir=$(VISTAINSTANCEDIR)/g/database

@@ -3,5 +3,6 @@ vista-foia (0.20131218-1) UNRELEASED; urgency=low
   [ Luis Ibanez ]
   * Initial attempt to package
   * Renamed the package as VistA-FOIA to have consistent naming with tar files.
+  * Updated location of fis-gtm (version number in directory) and vista package VCS url.
 
  -- Luis Ibanez <luis.ibanez@kitware.com>  Wed, 4 Jul 2012 17:16:45 -0500
