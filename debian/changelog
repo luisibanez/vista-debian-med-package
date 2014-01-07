@@ -5,5 +5,6 @@ vista-foia (0.20140106-1) UNRELEASED; urgency=low
   * Renamed the package as VistA-FOIA to have consistent naming with tar files.
   * Updated location of fis-gtm (version number in directory) and vista package VCS url.
   * Updated to VistA helper package to the most recent version: 20140106.
+  * Added "describe-current-version" target to debian/rules.
 
  -- Luis Ibanez <luis.ibanez@kitware.com>  Wed, 4 Jul 2012 17:16:45 -0500
