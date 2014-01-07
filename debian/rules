@@ -9,7 +9,9 @@ VISTAINSTANCEDIR=debian/usr/share/vista-foia
 GTM_INSTALL_DIR=/usr/lib/fis-gtm/V6.0-003_x86_64
 VISTA_GLOBALS_DIR=$(VISTAINSTANCEDIR)/g
 VISTA_ROUTINES_DIR=$(VISTAINSTANCEDIR)/r
-GTMPROFILE=$(GTM_INSTALL_DIR)/gtmprofile
+VISTA_OBJECTS_DIR=$(VISTAINSTANCEDIR)/o
+VISTA_GTM_DATABASE=$(VISTAINSTANCEDIR)/g/database
+VISTA_GTM_ROUTINES="$(VISTAINSTANCEDIR)/o\($(VISTAINSTANCEDIR)/r\) $(GTM_INSTALL_DIR)/libgtmutil.so"
 
 %:
 	dh $@
@@ -18,25 +20,19 @@ override_dh_auto_configure:
 	dh_auto_configure -- \
 -DCMAKE_INSTALL_PREFIX:PATH=/usr \
 -DGTM_INSTALL_DIR=$(GTM_INSTALL_DIR) \
--DGTMPROFILE:PATH=$(GTMPROFILE) \
 -DVISTA_GLOBALS_DIR:PATH=$(VISTA_GLOBALS_DIR) \
 -DVISTA_ROUTINE_DIR:PATH=$(VISTA_ROUTINES_DIR)
 
 override_dh_auto_install:
 	mkdir -p $(VISTAINSTANCEDIR)
-	mkdir -p $(VISTAINSTANCEDIR)/r
-	mkdir -p $(VISTAINSTANCEDIR)/o
-	mkdir -p $(VISTAINSTANCEDIR)/g
+	mkdir -p $(VISTA_ROUTINES_DIR)
+	mkdir -p $(VISTA_OBJECTS_DIR)
+	mkdir -p $(VISTA_GLOBALS_DIR)
 	mkdir -p $(VISTAINSTANCEDIR)/inet
 	mkdir -p $(VISTAINSTANCEDIR)/inet/Logs
-	gtm_dist=$(GTM_INSTALL_DIR)
-	gtmprofilefile=$(gtm_dist)/gtmprofile
-	source $(gtmprofilefile)
-	gtmgbldir=$(VISTAINSTANCEDIR)/g/database
-	gtmroutines="$(VISTAINSTANCEDIR)/o($(VISTAINSTANCEDIR)/r) $(gtm_dist)/libgtmutil.so"
-	echo "change -s DEFAULT -f=$(VISTAINSTANCEDIR)/g/database" | $(gtm_dist)/mumps -r GDE
-	$(gtm_dist)/mupip create
-	$(gtm_dist)/dse change -f -key_max=1023 -rec=4096
+	gtmgbldir=$(VISTA_GTM_DATABASE) && gtmroutines="$(VISTA_GTM_ROUTINES)" && gtm_dist=$(GTM_INSTALL_DIR) && echo "change -s DEFAULT -f=$(VISTAINSTANCEDIR)/g/database" | $(GTM_INSTALL_DIR)/mumps -r GDE
+	gtmgbldir=$(VISTA_GTM_DATABASE) && gtmroutines="$(VISTA_GTM_ROUTINES)" && gtm_dist=$(GTM_INSTALL_DIR) && $(GTM_INSTALL_DIR)/mupip create
+	gtmgbldir=$(VISTA_GTM_DATABASE) && gtmroutines="$(VISTA_GTM_ROUTINES)" && gtm_dist=$(GTM_INSTALL_DIR) && $(GTM_INSTALL_DIR)/dse change -f -key_max=1023 -rec=4096
 
 
 get-orig-source:
