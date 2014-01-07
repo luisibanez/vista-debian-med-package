@@ -41,7 +41,7 @@ override_dh_auto_install:
 
 get-orig-source:
 	wget -O../OSEHRA-VistA-M-897bff2a.orig.tar.gz https://github.com/OSEHRA/VistA-M/tarball/897bff2a
-	wget -O../OSEHRA-VistA-b34e6b28.orig.tar.gz https://github.com/OSEHRA/VistA/tarball/b34e6b28
+	wget -O../vista-foia_0.20140106.orig.tar.gz   https://github.com/OSEHRA/VistA/tarball/fdc8ff2b
 
 describe-current-version:
 	git describe --tags upstream | sed 's,^release-,,;s,-,+,;s,-,~,;'
