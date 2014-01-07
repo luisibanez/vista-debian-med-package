@@ -1,9 +1,9 @@
-vista-foia (0.20130405-1) UNRELEASED; urgency=low
+vista-foia (0.20140106-1) UNRELEASED; urgency=low
 
   [ Luis Ibanez ]
   * Initial attempt to package
   * Renamed the package as VistA-FOIA to have consistent naming with tar files.
   * Updated location of fis-gtm (version number in directory) and vista package VCS url.
-  * Restored date of latest FOIA release (April 5th 2013) as the version of VistA: 20130405.
+  * Updated to VistA helper package to the most recent version: 20140106.
 
  -- Luis Ibanez <luis.ibanez@kitware.com>  Wed, 4 Jul 2012 17:16:45 -0500
