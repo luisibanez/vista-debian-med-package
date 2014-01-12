@@ -42,3 +42,5 @@ get-orig-source:
 describe-current-version:
 	git describe --tags upstream | sed 's,^release-,,;s,-,+,;s,-,~,;'
 
+override_dh_auto_clean:
+	rm -rf $(VISTAINSTANCEDIR)

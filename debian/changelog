@@ -3,11 +3,15 @@ vista-foia (0.20140106-1) UNRELEASED; urgency=low
   [ Luis Ibanez ]
   * Initial attempt to package
   * Renamed the package as VistA-FOIA to have consistent naming with tar files.
-  * Updated location of fis-gtm (version number in directory) and vista package VCS url.
+  * Updated location of fis-gtm (version number in directory) and vista package
+    VCS url.
   * Updated to VistA helper package to the most recent version: 20140106.
   * Added "describe-current-version" target to debian/rules.
-  * Fixed name of tar.gz file and git hash in get-orig-source for VistA repository.
+  * Fixed name of tar.gz file and git hash in get-orig-source for VistA
+    repository.
   * Making progress on database configuration in rules file.
-  * Fixed use of environment variables in rules for gtm_dist and call to GDE and mupip.
+  * Fixed use of environment variables in rules for gtm_dist and call to GDE
+    and mupip.
+  * Added in rules override for clean.
 
  -- Luis Ibanez <luis.ibanez@kitware.com>  Wed, 4 Jul 2012 17:16:45 -0500
