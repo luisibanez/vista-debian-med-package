@@ -18,7 +18,7 @@ Package: vista-foia
 Architecture: amd64 i386
 Depends: fis-gtm,
          cmake (>= 2.8.5)
-Provides: VistA-FOIA
+Provides: vista-foia
 Description: package for VistA EHR
  VistA: the Veterans Health Information Systems and Technology Architecture.
  This is an integrated health information system that was developed by

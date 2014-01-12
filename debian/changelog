@@ -13,5 +13,8 @@ vista-foia (0.20140106-1) UNRELEASED; urgency=low
   * Fixed use of environment variables in rules for gtm_dist and call to GDE
     and mupip.
   * Added in rules override for clean.
+  * Initial release (Closes: #541242)
+  * Fixed lintian warning on Apache 2.0 license in copyright file.
+  * Fixed package name in debian/control Provides: field. Lintian warning.
 
  -- Luis Ibanez <luis.ibanez@kitware.com>  Wed, 4 Jul 2012 17:16:45 -0500

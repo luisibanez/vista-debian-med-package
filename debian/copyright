@@ -9,7 +9,9 @@ Files: *
 Copyright: Public Domain - Employees of the Department of Veterans Affairs.
 Comment:   Modifications received by OSEHRA are copyrighted by contributors.
 License: Apache-2.0
+ /usr/share/common-licenses/Apache-2.0
 
 Files: debian/*
 Copyright: 2012 Luis Ibanez <luis.ibanez@kitware.com>
 License: Apache-2.0
+ /usr/share/common-licenses/Apache-2.0
