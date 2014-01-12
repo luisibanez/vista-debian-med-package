@@ -11,7 +11,7 @@ VISTA_GLOBALS_DIR=$(VISTAINSTANCEDIR)/g
 VISTA_ROUTINES_DIR=$(VISTAINSTANCEDIR)/r
 VISTA_OBJECTS_DIR=$(VISTAINSTANCEDIR)/o
 VISTA_GTM_DATABASE=$(VISTAINSTANCEDIR)/g/database
-VISTA_GTM_ROUTINES="$(VISTAINSTANCEDIR)/o\($(VISTAINSTANCEDIR)/r\) $(GTM_INSTALL_DIR)/libgtmutil.so"
+VISTA_GTM_ROUTINES="$(VISTAINSTANCEDIR)/o($(VISTAINSTANCEDIR)/r) $(GTM_INSTALL_DIR)/libgtmutil.so"
 
 %:
 	dh $@
@@ -30,9 +30,9 @@ override_dh_auto_install:
 	mkdir -p $(VISTA_GLOBALS_DIR)
 	mkdir -p $(VISTAINSTANCEDIR)/inet
 	mkdir -p $(VISTAINSTANCEDIR)/inet/Logs
-	gtmgbldir=$(VISTA_GTM_DATABASE) && gtmroutines="$(VISTA_GTM_ROUTINES)" && gtm_dist=$(GTM_INSTALL_DIR) && echo "change -s DEFAULT -f=$(VISTAINSTANCEDIR)/g/database" | $(GTM_INSTALL_DIR)/mumps -r GDE
-	gtmgbldir=$(VISTA_GTM_DATABASE) && gtmroutines="$(VISTA_GTM_ROUTINES)" && gtm_dist=$(GTM_INSTALL_DIR) && $(GTM_INSTALL_DIR)/mupip create
-	gtmgbldir=$(VISTA_GTM_DATABASE) && gtmroutines="$(VISTA_GTM_ROUTINES)" && gtm_dist=$(GTM_INSTALL_DIR) && $(GTM_INSTALL_DIR)/dse change -f -key_max=1023 -rec=4096
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); echo "change -s DEFAULT -f=$(VISTAINSTANCEDIR)/g/database" | $(GTM_INSTALL_DIR)/mumps -r GDE)
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/mupip create)
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/dse change -f -key_max=1023 -rec=4096)
 
 
 get-orig-source:
