@@ -5,13 +5,16 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-VISTAINSTANCEDIR=debian/usr/share/vista-foia
+VISTAINSTANCEDIR=$(PWD)/debian/usr/share/vista-foia
 GTM_INSTALL_DIR=/usr/lib/fis-gtm/V6.0-003_x86_64
 VISTA_GLOBALS_DIR=$(VISTAINSTANCEDIR)/g
 VISTA_ROUTINES_DIR=$(VISTAINSTANCEDIR)/r
 VISTA_OBJECTS_DIR=$(VISTAINSTANCEDIR)/o
 VISTA_GTM_DATABASE=$(VISTAINSTANCEDIR)/g/database
-VISTA_GTM_ROUTINES="$(VISTAINSTANCEDIR)/o($(VISTAINSTANCEDIR)/r) $(GTM_INSTALL_DIR)/libgtmutil.so"
+VISTA_GTM_ROUTINES="$(VISTA_OBJECTS_DIR)($(VISTA_ROUTINES_DIR)) $(GTM_INSTALL_DIR)/libgtmutil.so"
+VISTA_M_WORKING_TREE=$(PWD)/OSEHRA-VistA-M-897bff2
+VISTA_TESTING_BINARY_DIR=$(PWD)/debian/build
+VISTA_TESTING_SOURCE_DIR=$(PWD)
 
 %:
 	dh $@
@@ -25,6 +28,7 @@ override_dh_auto_configure:
 
 override_dh_auto_install:
 	mkdir -p $(VISTAINSTANCEDIR)
+	mkdir -p $(VISTA_TESTING_BINARY_DIR)
 	mkdir -p $(VISTA_ROUTINES_DIR)
 	mkdir -p $(VISTA_OBJECTS_DIR)
 	mkdir -p $(VISTA_GLOBALS_DIR)
@@ -33,6 +37,30 @@ override_dh_auto_install:
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); echo "change -s DEFAULT -f=$(VISTAINSTANCEDIR)/g/database" | $(GTM_INSTALL_DIR)/mumps -r GDE)
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/mupip create)
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/dse change -f -key_max=1023 -rec=4096)
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
+cd $(VISTA_TESTING_BINARY_DIR); \
+cmake $(VISTA_TESTING_SOURCE_DIR)   \
+-DCMAKE_INSTALL_PREFIX:PATH=/usr \
+-DGTM_INSTALL_DIR=$(GTM_INSTALL_DIR) \
+-DVISTA_GLOBALS_DIR:PATH=$(VISTA_GLOBALS_DIR) \
+-DVISTA_ROUTINE_DIR:PATH=$(VISTA_ROUTINES_DIR) \
+-DGTM_DIST:PATH=$(GTM_INSTALL_DIR) \
+-DGTM_SOURCE_DIR:STRING=$(VISTA_GTM_ROUTINES) \
+-DTEST_VISTA:BOOL=ON \
+-DTEST_VISTA_SETUP:BOOL=OFF \
+-DTEST_VISTA_FRESH:BOOL=ON \
+-DTEST_VISTA_FRESH_ALL:BOOL=ON \
+-DTEST_VISTA_GTM_ROUTINE_DIR:STRING=$(VISTA_ROUTINES_DIR) \
+-DTEST_VISTA_FRESH_M_DIR:PATH=$(VISTA_M_WORKING_TREE) \
+-DTEST_VISTA_FRESH_GTM_ROUTINE_DIR:PATH=$(VISTA_ROUTINES_DIR) \
+-DTEST_VISTA_FRESH_GTM_GLOBALS_DAT:FILEPATH=$(VISTA_GTM_DATABASE).dat \
+)
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
+cd $(VISTA_TESTING_BINARY_DIR); \
+make ExperimentalStart; \
+make ExperimentalConfigure; \
+make ExperimentalBuild)
+# make ExperimentalTest)
 
 
 get-orig-source:
@@ -44,3 +72,4 @@ describe-current-version:
 
 override_dh_auto_clean:
 	rm -rf $(VISTAINSTANCEDIR)
+	rm -rf $(VISTA_TESTING_BINARY_DIR)

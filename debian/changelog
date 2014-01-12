@@ -16,5 +16,6 @@ vista-foia (0.20140106-1) UNRELEASED; urgency=low
   * Initial release (Closes: #541242)
   * Fixed lintian warning on Apache 2.0 license in copyright file.
   * Fixed package name in debian/control Provides: field. Lintian warning.
+  * Configured CMake to build the binary testing directory.
 
  -- Luis Ibanez <luis.ibanez@kitware.com>  Wed, 4 Jul 2012 17:16:45 -0500
