@@ -20,23 +20,6 @@ VISTA_TESTING_SOURCE_DIR=$(PWD)
 	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure -- \
--DCMAKE_INSTALL_PREFIX:PATH=/usr \
--DGTM_INSTALL_DIR=$(GTM_INSTALL_DIR) \
--DVISTA_GLOBALS_DIR:PATH=$(VISTA_GLOBALS_DIR) \
--DVISTA_ROUTINE_DIR:PATH=$(VISTA_ROUTINES_DIR)
-
-override_dh_auto_install:
-	mkdir -p $(VISTAINSTANCEDIR)
-	mkdir -p $(VISTA_TESTING_BINARY_DIR)
-	mkdir -p $(VISTA_ROUTINES_DIR)
-	mkdir -p $(VISTA_OBJECTS_DIR)
-	mkdir -p $(VISTA_GLOBALS_DIR)
-	mkdir -p $(VISTAINSTANCEDIR)/inet
-	mkdir -p $(VISTAINSTANCEDIR)/inet/Logs
-	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); echo "change -s DEFAULT -f=$(VISTAINSTANCEDIR)/g/database" | $(GTM_INSTALL_DIR)/mumps -r GDE)
-	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/mupip create)
-	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/dse change -f -key_max=1023 -rec=4096)
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
 cd $(VISTA_TESTING_BINARY_DIR); \
 cmake $(VISTA_TESTING_SOURCE_DIR)   \
@@ -55,6 +38,20 @@ cmake $(VISTA_TESTING_SOURCE_DIR)   \
 -DTEST_VISTA_FRESH_GTM_ROUTINE_DIR:PATH=$(VISTA_ROUTINES_DIR) \
 -DTEST_VISTA_FRESH_GTM_GLOBALS_DAT:FILEPATH=$(VISTA_GTM_DATABASE).dat \
 )
+
+override_dh_auto_install:
+	mkdir -p $(VISTAINSTANCEDIR)
+	mkdir -p $(VISTA_TESTING_BINARY_DIR)
+	mkdir -p $(VISTA_ROUTINES_DIR)
+	mkdir -p $(VISTA_OBJECTS_DIR)
+	mkdir -p $(VISTA_GLOBALS_DIR)
+	mkdir -p $(VISTAINSTANCEDIR)/inet
+	mkdir -p $(VISTAINSTANCEDIR)/inet/Logs
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); echo "change -s DEFAULT -f=$(VISTAINSTANCEDIR)/g/database" | $(GTM_INSTALL_DIR)/mumps -r GDE)
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/mupip create)
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/dse change -f -key_max=1023 -rec=4096)
+
+override_dh_auto_build:
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
 cd $(VISTA_TESTING_BINARY_DIR); \
 make ExperimentalStart; \
