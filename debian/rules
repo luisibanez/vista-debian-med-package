@@ -76,3 +76,5 @@ describe-current-version:
 override_dh_auto_clean:
 	rm -rf $(VISTAINSTANCEDIR)
 	rm -rf $(VISTA_TESTING_BINARY_DIR)
+	find $(VISTA_TESTING_SOURCE_DIR) -name "*.pyc" -delete
+

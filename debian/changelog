@@ -20,5 +20,6 @@ vista-foia (0.20140106-1) UNRELEASED; urgency=low
   * In rules, separating install, configure and build.
   * In rules, started to add management of arch. Mostly x64 so far.
   * In control, added xinetd and ssh as dependencies.
+  * In rules, removing .pyc files in clean: target.
 
  -- Luis Ibanez <luis.ibanez@kitware.com>  Wed, 4 Jul 2012 17:16:45 -0500
