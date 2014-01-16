@@ -56,6 +56,7 @@ override_dh_auto_install:
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); echo "change -s DEFAULT -f=$(VISTAINSTANCEDIR)/g/database" | $(GTM_INSTALL_DIR)/mumps -r GDE)
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/mupip create)
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/dse change -f -key_max=1023 -rec=4096)
+	cp -r debian/deploy $(VISTAINSTANCEDIR)
 
 override_dh_auto_build:
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
@@ -63,7 +64,6 @@ cd $(VISTA_TESTING_BINARY_DIR); \
 make ExperimentalStart; \
 make ExperimentalConfigure; \
 make ExperimentalBuild)
-# make ExperimentalTest)
 
 
 get-orig-source:
