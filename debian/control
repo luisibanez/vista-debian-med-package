@@ -17,7 +17,9 @@ Homepage: http://www.osehra.org
 Package: vista-foia
 Architecture: amd64 i386
 Depends: fis-gtm,
-         cmake (>= 2.8.5)
+         cmake (>= 2.8.5),
+         xinetd,
+         ssh
 Provides: vista-foia
 Description: package for VistA EHR
  VistA: the Veterans Health Information Systems and Technology Architecture.
