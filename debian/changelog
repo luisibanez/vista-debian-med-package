@@ -26,5 +26,6 @@ vista-foia (0.20140106-1) UNRELEASED; urgency=low
   * In control, add meta-package to point to the most recent FOIA release.
     The vista-foia-0.20130405 corresponds to the version of the M routines
     included in the FOIA release of April 5th 2013.
+  * In rules, better chain targets for import and then compilation.
 
  -- Luis Ibanez <luis.ibanez@kitware.com>  Wed, 4 Jul 2012 17:16:45 -0500

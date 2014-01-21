@@ -24,6 +24,7 @@ VISTA_GTM_ROUTINES="$(VISTA_OBJECTS_DIR)($(VISTA_ROUTINES_DIR)) $(VISTA_GTM_ROUT
 VISTA_M_WORKING_TREE=$(PWD)/OSEHRA-VistA-M-897bff2
 VISTA_TESTING_BINARY_DIR=$(PWD)/debian/build
 VISTA_TESTING_SOURCE_DIR=$(PWD)
+VISTA_TESTING_LOG_DIR=$(VISTA_TESTING_BINARY_DIR)/Temporary/Log
 
 %:
 	dh $@
@@ -40,6 +41,7 @@ include debian/vista_m_routines_list
 #
 vpath %.m $(VISTA_ROUTINES_DIR)
 vpath %.o $(VISTA_OBJECTS_DIR)
+vpath %.log $(VISTA_TESTING_LOG_DIR)
 
 #
 #  Implicit rule to compile MUMPS files into object files
@@ -60,7 +62,7 @@ vista_o_objects_files := $(patsubst %.m,%.o,$(vista_m_sources_files))
 #
 #  This list of dependencies will invoke the implicit rule for .m -> .o
 #
-compile_vista_routines: $(vista_o_objects_files)
+vista_routines_compile: $(vista_o_objects_files)
 	echo "Compiling all M routines"
 
 
@@ -85,6 +87,16 @@ cmake $(VISTA_TESTING_SOURCE_DIR)   \
 -DTEST_VISTA_FRESH_GTM_GLOBALS_DAT:FILEPATH=$(VISTA_GTM_DATABASE).dat \
 )
 
+vista_import_routines_and_globals:  RoutineImport.log
+	echo "Starting Routines Import Process"
+
+RoutineImport.log:
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
+cd $(VISTA_TESTING_BINARY_DIR); \
+make ExperimentalStart; \
+make ExperimentalConfigure; \
+make ExperimentalBuild)
+
 override_dh_auto_install:
 	mkdir -p $(VISTAINSTANCEDIR)
 	mkdir -p $(VISTA_TESTING_BINARY_DIR)
@@ -98,14 +110,8 @@ override_dh_auto_install:
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/dse change -f -key_max=1023 -rec=4096)
 	cp -r debian/deploy $(VISTAINSTANCEDIR)
 
-import_routines_and_globals:
-	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
-cd $(VISTA_TESTING_BINARY_DIR); \
-make ExperimentalStart; \
-make ExperimentalConfigure; \
-make ExperimentalBuild)
 
-override_dh_auto_build:  import_routines_and_globals   compile_vista_routines
+override_dh_auto_build: vista_import_routines_and_globals  vista_routines_compile
 
 
 
