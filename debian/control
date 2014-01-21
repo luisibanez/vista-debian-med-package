@@ -15,12 +15,31 @@ Vcs-Svn: svn://svn.debian.org/debian-med/trunk/packages/vista/trunk
 Homepage: http://www.osehra.org
 
 Package: vista-foia
+Architecture: all
+Depends: ${misc:Depends},
+         vista-foia-0.20130405
+Provides: vista
+Description: metapackage for the latest version of vista-foia.
+ VistA: the Veterans Health Information Systems and Technology Architecture.
+ This is an integrated health information system that was developed by
+ employees of the US Department of Veterans Affairs (VA). Therefore, the
+ large majority of the source code in VistA is in the Public Domain.
+ In 2011, the VA set up an Open Source custodial organization (OSEHRA)
+ to develop an open source environment for VistA. OSEHRA adopted the
+ Apache 2.0 License for all subsequent contributions to be integrated
+ with the VisA code base.
+ .
+ VistA is implemented in M/MUMPS, and on Linux it depends on the GT.M
+ compiler and database being available (this is provided by the package
+ fis-gtm).
+
+Package: vista-foia-0.20130405
 Architecture: amd64 i386
 Depends: fis-gtm,
          cmake (>= 2.8.5),
          xinetd,
          ssh
-Provides: vista-foia
+Provides: vista
 Description: package for VistA EHR
  VistA: the Veterans Health Information Systems and Technology Architecture.
  This is an integrated health information system that was developed by
