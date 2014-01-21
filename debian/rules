@@ -96,12 +96,15 @@ override_dh_auto_install:
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/dse change -f -key_max=1023 -rec=4096)
 	cp -r debian/deploy $(VISTAINSTANCEDIR)
 
-override_dh_auto_build:
+import_routines_and_globals:
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
 cd $(VISTA_TESTING_BINARY_DIR); \
 make ExperimentalStart; \
 make ExperimentalConfigure; \
 make ExperimentalBuild)
+
+override_dh_auto_build:  import_routines_and_globals   compile_vista_routines
+
 
 
 get-orig-source:
