@@ -8,7 +8,7 @@
 ARCH=$(shell dpkg-architecture -qDEB_HOST_GNU_CPU)
 UAPIVER=6.0-003
 UAPIDIR=V$(UAPIVER)_$(ARCH)
-LOCALINSTANCEDIR=$(PWD)/debian
+LOCALINSTANCEDIR=$(CURDIR)/debian
 VISTA_FOIA_DATE=20130405
 VISTA_FOIA_VERSION=V-0.$(VISTA_FOIA_DATE)
 VISTAINSTANCEDIR=$(LOCALINSTANCEDIR)/usr/share/vista-foia/$(VISTA_FOIA_VERSION)
@@ -21,9 +21,9 @@ VISTA_GTM_DATABASE=$(VISTAINSTANCEDIR)/g/database
 # We need to add here the x86 alternative.
 VISTA_GTM_ROUTINES_ARCH=$(GTM_INSTALL_DIR)/libgtmutil.so
 VISTA_GTM_ROUTINES="$(VISTA_OBJECTS_DIR)($(VISTA_ROUTINES_DIR)) $(VISTA_GTM_ROUTINES_ARCH)"
-VISTA_M_WORKING_TREE=$(PWD)/OSEHRA-VistA-M-897bff2
-VISTA_TESTING_BINARY_DIR=$(PWD)/debian/build
-VISTA_TESTING_SOURCE_DIR=$(PWD)
+VISTA_M_WORKING_TREE=$(CURDIR)/OSEHRA-VistA-M-897bff2
+VISTA_TESTING_BINARY_DIR=$(CURDIR)/debian/build
+VISTA_TESTING_SOURCE_DIR=$(CURDIR)
 VISTA_TESTING_LOG_DIR=$(VISTA_TESTING_BINARY_DIR)/Temporary/Log
 
 %:
@@ -68,8 +68,20 @@ vista_routines_compile: $(vista_o_objects_files)
 
 
 override_dh_auto_configure:
-	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
-cd $(VISTA_TESTING_BINARY_DIR); \
+	mkdir -p $(VISTAINSTANCEDIR)
+	mkdir -p $(VISTA_TESTING_BINARY_DIR)
+	mkdir -p $(VISTA_ROUTINES_DIR)
+	mkdir -p $(VISTA_OBJECTS_DIR)
+	mkdir -p $(VISTA_GLOBALS_DIR)
+	mkdir -p $(VISTAINSTANCEDIR)/inet
+	mkdir -p $(VISTAINSTANCEDIR)/inet/Logs
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); echo "change -s DEFAULT -f=$(VISTAINSTANCEDIR)/g/database" | $(GTM_INSTALL_DIR)/mumps -r GDE)
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/mupip create)
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/dse change -f -key_max=1023 -rec=4096)
+	cp -r debian/deploy $(VISTAINSTANCEDIR)
+	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR);  \
+cd $(VISTA_TESTING_BINARY_DIR) && \
+echo ${PWD} && \
 cmake $(VISTA_TESTING_SOURCE_DIR)   \
 -DCMAKE_INSTALL_PREFIX:PATH=/usr \
 -DGTM_INSTALL_DIR=$(GTM_INSTALL_DIR) \
@@ -98,17 +110,6 @@ make ExperimentalConfigure; \
 make ExperimentalBuild)
 
 override_dh_auto_install:
-	mkdir -p $(VISTAINSTANCEDIR)
-	mkdir -p $(VISTA_TESTING_BINARY_DIR)
-	mkdir -p $(VISTA_ROUTINES_DIR)
-	mkdir -p $(VISTA_OBJECTS_DIR)
-	mkdir -p $(VISTA_GLOBALS_DIR)
-	mkdir -p $(VISTAINSTANCEDIR)/inet
-	mkdir -p $(VISTAINSTANCEDIR)/inet/Logs
-	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); echo "change -s DEFAULT -f=$(VISTAINSTANCEDIR)/g/database" | $(GTM_INSTALL_DIR)/mumps -r GDE)
-	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/mupip create)
-	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/dse change -f -key_max=1023 -rec=4096)
-	cp -r debian/deploy $(VISTAINSTANCEDIR)
 
 
 override_dh_auto_build: vista_import_routines_and_globals  vista_routines_compile
