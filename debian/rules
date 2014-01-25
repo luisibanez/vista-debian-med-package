@@ -59,13 +59,6 @@ $(GTM_INSTALL_DIR)/mumps -object=$(VISTA_OBJECTS_DIR)/$(@F)  $<  )
 vista_m_sources := $(patsubst %.m,$(VISTA_ROUTINES_DIR)/%.m,$(vista_m_sources_files))
 vista_o_objects_files := $(patsubst %.m,%.o,$(vista_m_sources_files))
 
-#
-#  This list of dependencies will invoke the implicit rule for .m -> .o
-#
-vista_routines_compile: $(vista_o_objects_files)
-	echo "Compiling all M routines"
-
-
 
 override_dh_auto_configure:
 	mkdir -p $(VISTAINSTANCEDIR)
@@ -96,24 +89,20 @@ cmake $(VISTA_TESTING_SOURCE_DIR)   \
 -DTEST_VISTA_GTM_ROUTINE_DIR:STRING=$(VISTA_ROUTINES_DIR) \
 -DTEST_VISTA_FRESH_M_DIR:PATH=$(VISTA_M_WORKING_TREE) \
 -DTEST_VISTA_FRESH_GTM_ROUTINE_DIR:PATH=$(VISTA_ROUTINES_DIR) \
+-DTEST_VISTA_FRESH_GTM_OBJECT_DIR:PATH=$(VISTA_OBJECTS_DIR) \
 -DTEST_VISTA_FRESH_GTM_GLOBALS_DAT:FILEPATH=$(VISTA_GTM_DATABASE).dat \
 )
 
-vista_import_routines_and_globals:  RoutineImport.log
-	echo "Starting Routines Import Process"
 
-RoutineImport.log:
+override_dh_auto_install:
+
+
+override_dh_auto_build:
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
 cd $(VISTA_TESTING_BINARY_DIR); \
 make ExperimentalStart; \
 make ExperimentalConfigure; \
 make ExperimentalBuild)
-
-override_dh_auto_install:
-
-
-override_dh_auto_build: vista_import_routines_and_globals  vista_routines_compile
-
 
 
 get-orig-source:

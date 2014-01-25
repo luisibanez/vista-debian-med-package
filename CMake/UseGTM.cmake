@@ -51,6 +51,11 @@ if(TEST_VISTA_FRESH)
   if(NOT TEST_VISTA_FRESH_GTM_ROUTINE_DIR AND TEST_VISTA_GTM_ROUTINE_DIR)
     set(TEST_VISTA_FRESH_GTM_ROUTINE_DIR ${TEST_VISTA_GTM_ROUTINE_DIR})
   endif()
+  set(TEST_VISTA_FRESH_GTM_OBJECT_DIR "" CACHE PATH
+    "Directory where OSEHRA routines will be compiled while setting up a fresh VistA instance. (NOTE: Path must be in the 'gtmroutines' environment variable)")
+  if(NOT TEST_VISTA_FRESH_GTM_OBJECT_DIR AND TEST_VISTA_GTM_OBJECT_DIR)
+    set(TEST_VISTA_FRESH_GTM_OBJECT_DIR ${TEST_VISTA_GTM_OBJECT_DIR}/../o)
+  endif()
   set(TEST_VISTA_FRESH_GTM_GLOBALS_DAT "" CACHE FILEPATH " Path to the GT.M database.dat")
 
   list(APPEND freshinfo TEST_VISTA_SETUP_UCI_NAME)

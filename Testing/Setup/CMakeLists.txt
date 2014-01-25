@@ -17,6 +17,7 @@ find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-M DOC "Path to the folder that cont
 list(APPEND freshinfo TEST_VISTA_FRESH_M_DIR)
 option(TEST_VISTA_FRESH_CUSTOM_REFRESH "Use a custom script to refresh the VistA Databases" OFF)
 mark_as_advanced(TEST_VISTA_FRESH_CUSTOM_REFRESH)
+include(ListOfVistARoutines)
 
 if(TEST_VISTA_FRESH_CUSTOM_REFRESH)
   set(TEST_VISTA_FRESH_CUSTOM_COMMAND "" CACHE STRING "Command to run in place of the ImportRG refresh.
@@ -63,6 +64,21 @@ if(VISTA_HAVE_BUILD_TOOL)
     set(all "")
   endif()
   add_custom_target(FreshVistA ${all} COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/ImportRG.cmake)
+
+  add_custom_target(CompileMRoutines
+    DEPENDS FreshVistA
+    )
+
+  foreach(mroutine in ${TEST_VISTA_FRESH_GTM_ROUTINES_LIST} )
+    set(target_object_file ${mroutine}.o)
+    add_custom_target(${target_object_file}
+      DEPENDS FreshVistA
+      WORKING_DIRECTORY ${TEST_VISTA_FRESH_GTM_OBJECT_DIR}
+      COMMAND echo ${mroutine}
+      )
+    add_dependencies(CompileMRoutines ${target_object_file})
+  endforeach()
+
 else()
   set_property(GLOBAL APPEND PROPERTY VISTA_BUILD_SCRIPTS ${CMAKE_CURRENT_BINARY_DIR}/ImportRG.cmake)
 endif()
