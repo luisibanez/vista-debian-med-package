@@ -70,11 +70,16 @@ if(VISTA_HAVE_BUILD_TOOL)
     )
 
   foreach(mroutine in ${TEST_VISTA_FRESH_GTM_ROUTINES_LIST} )
-    set(target_object_file ${mroutine}.o)
+    get_filename_component(name_without_extension ${mroutine} NAME_WE)
+    set(target_object_file ${name_without_extension}.o)
+    set(target_object_file_with_path ${TEST_VISTA_FRESH_GTM_OBJECT_DIR}/${target_object_file})
+    set(source_routine_file_with_path ${TEST_VISTA_FRESH_GTM_ROUTINE_DIR}/${mroutine})
+    # Could set here set(ENV{gtm_destdir} "base of the debian path")
+    # as well as the other environment variables needed by fis-gtm to run.
     add_custom_target(${target_object_file}
       DEPENDS FreshVistA
       WORKING_DIRECTORY ${TEST_VISTA_FRESH_GTM_OBJECT_DIR}
-      COMMAND echo ${mroutine}
+      COMMAND  ${GTM_DIST}/mumps -object=${target_object_file_with_path} ${source_routine_file_with_path}
       )
     add_dependencies(CompileMRoutines ${target_object_file})
   endforeach()

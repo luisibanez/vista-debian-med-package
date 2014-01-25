@@ -99,6 +99,7 @@ override_dh_auto_install:
 
 override_dh_auto_build:
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
+export gtm_destdir=$(LOCALINSTANCEDIR); \
 cd $(VISTA_TESTING_BINARY_DIR); \
 make ExperimentalStart; \
 make ExperimentalConfigure; \
