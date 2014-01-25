@@ -8,10 +8,12 @@
 ARCH=$(shell dpkg-architecture -qDEB_HOST_GNU_CPU)
 UAPIVER=6.0-003
 UAPIDIR=V$(UAPIVER)_$(ARCH)
+BINPKG := $(shell awk '/Package:.*[0-9]/{print $$2;}' debian/control)
 LOCALINSTANCEDIR=$(CURDIR)/debian
 VISTA_FOIA_DATE=20130405
 VISTA_FOIA_VERSION=V-0.$(VISTA_FOIA_DATE)
-VISTAINSTANCEDIR=$(LOCALINSTANCEDIR)/usr/share/vista-foia/$(VISTA_FOIA_VERSION)
+VISTA_INSTALL_DIR=usr/share/vista-foia/$(VISTA_FOIA_VERSION)
+VISTAINSTANCEDIR=$(LOCALINSTANCEDIR)/$(VISTA_INSTALL_DIR)
 GTM_INSTALL_DIR=/usr/lib/fis-gtm/$(UAPIDIR)
 VISTA_GLOBALS_DIR=$(VISTAINSTANCEDIR)/g
 VISTA_ROUTINES_DIR=$(VISTAINSTANCEDIR)/r
@@ -25,6 +27,7 @@ VISTA_M_WORKING_TREE=$(CURDIR)/OSEHRA-VistA-M-897bff2
 VISTA_TESTING_BINARY_DIR=$(CURDIR)/debian/build
 VISTA_TESTING_SOURCE_DIR=$(CURDIR)
 VISTA_TESTING_LOG_DIR=$(VISTA_TESTING_BINARY_DIR)/Temporary/Log
+LOCAL_VISTA_INSTALL_DIR := $(CURDIR)/debian/$(BINPKG)/$(VISTA_INSTALL_DIR)
 
 %:
 	dh $@
@@ -94,9 +97,6 @@ cmake $(VISTA_TESTING_SOURCE_DIR)   \
 )
 
 
-override_dh_auto_install:
-
-
 override_dh_auto_build:
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
 export gtm_destdir=$(LOCALINSTANCEDIR); \
@@ -105,6 +105,9 @@ make ExperimentalStart; \
 make ExperimentalConfigure; \
 make ExperimentalBuild)
 
+
+override_dh_auto_install:
+	dh_auto_install --destdir=debian/$(BINPKG) $@
 
 get-orig-source:
 	wget -O../OSEHRA-VistA-M-897bff2a.orig.tar.gz https://github.com/OSEHRA/VistA-M/tarball/897bff2a

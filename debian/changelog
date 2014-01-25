@@ -29,5 +29,7 @@ vista-foia (0.20140106-1) UNRELEASED; urgency=low
   * In rules, better chain targets for import and then compilation.
   * In control, set Vcs-Browser and Vcs-Git to point to git repo in Alioth.
   * In rules, reorganized build vs config. Leaving compilation only in build.
+  * In rules, refining auto_install rule.
+
 
  -- Luis Ibanez <luis.ibanez@kitware.com>  Wed, 4 Jul 2012 17:16:45 -0500
