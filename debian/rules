@@ -77,7 +77,6 @@ override_dh_auto_configure:
 	cp -r debian/deploy $(VISTAINSTANCEDIR)
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR);  \
 cd $(VISTA_TESTING_BINARY_DIR) && \
-echo ${PWD} && \
 cmake $(VISTA_TESTING_SOURCE_DIR)   \
 -DCMAKE_INSTALL_PREFIX:PATH=/usr \
 -DGTM_INSTALL_DIR=$(GTM_INSTALL_DIR) \
