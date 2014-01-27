@@ -81,6 +81,7 @@ if(VISTA_HAVE_BUILD_TOOL)
       WORKING_DIRECTORY ${TEST_VISTA_FRESH_GTM_OBJECT_DIR}
       COMMAND  ${GTM_DIST}/mumps -object=${target_object_file_with_path} ${source_routine_file_with_path}
       )
+    add_dependencies(${target_object_file} FreshVistA)
     add_dependencies(CompileMRoutines ${target_object_file})
   endforeach()
 
