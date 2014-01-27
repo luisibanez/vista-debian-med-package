@@ -85,7 +85,7 @@ cmake $(VISTA_TESTING_SOURCE_DIR)   \
 -DGTM_DIST:PATH=$(GTM_INSTALL_DIR) \
 -DGTM_SOURCE_DIR:STRING=$(VISTA_GTM_ROUTINES) \
 -DTEST_VISTA:BOOL=ON \
--DTEST_VISTA_SETUP:BOOL=OFF \
+-DTEST_VISTA_SETUP:BOOL=ON \
 -DTEST_VISTA_FRESH:BOOL=ON \
 -DTEST_VISTA_FRESH_ALL:BOOL=ON \
 -DTEST_VISTA_GTM_ROUTINE_DIR:STRING=$(VISTA_ROUTINES_DIR) \
@@ -99,10 +99,8 @@ cmake $(VISTA_TESTING_SOURCE_DIR)   \
 override_dh_auto_build:
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); \
 export gtm_destdir=$(LOCALINSTANCEDIR); \
-cd $(VISTA_TESTING_BINARY_DIR); \
-make ExperimentalStart; \
-make ExperimentalConfigure; \
-make ExperimentalBuild)
+cd $(VISTA_TESTING_BINARY_DIR) && make)
+
 
 
 override_dh_auto_install:
