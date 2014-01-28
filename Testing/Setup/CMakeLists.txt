@@ -29,8 +29,6 @@ set(TEST_VISTA_FRESH_GLOBALS_IMPORT_TIMEOUT 3600 CACHE STRING "Timeout in second
 set(TEST_VISTA_SETUP_SITE_NAME "DEMO.OSEHRA.ORG" CACHE STRING "Name to set for the site address when initializing VistA instance.  Default is 'DEMO.OSEHRA.ORG'")
 set(TEST_VISTA_SETUP_PRIMARY_HFS_DIRECTORY "@" CACHE PATH "Absolute path to the system temp directory.  The default of '@' will cause the system to use the working directory of the process as the temp directory.  This path has a limit of 50 characters.  Avoid Windows paths with a '~' ")
 
-option(VISTA_PRECOMPILE_ALL_ROUTINES "Pre-compile all the M routines" OFF)
-
 foreach(fvariable ${freshinfo})
   if(NOT ${fvariable})
     message(SEND_ERROR "The value for ${fvariable} needs to be set for TEST_VISTA_FRESH to be run successfully.")
@@ -68,25 +66,27 @@ if(VISTA_HAVE_BUILD_TOOL)
   add_custom_target(FreshVistA ${all} COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/ImportRG.cmake)
 
   if(VISTA_PRECOMPILE_ALL_ROUTINES)
-    add_custom_target(CompileMRoutines
-      DEPENDS FreshVistA
-      )
 
-    foreach(mroutine in ${TEST_VISTA_FRESH_GTM_ROUTINES_LIST} )
+    foreach(mroutine ${TEST_VISTA_FRESH_GTM_ROUTINES_LIST})
       get_filename_component(name_without_extension ${mroutine} NAME_WE)
       set(target_object_file ${name_without_extension}.o)
       set(target_object_file_with_path ${TEST_VISTA_FRESH_GTM_OBJECT_DIR}/${target_object_file})
       set(source_routine_file_with_path ${TEST_VISTA_FRESH_GTM_ROUTINE_DIR}/${mroutine})
       # Could set here set(ENV{gtm_destdir} "base of the debian path")
       # as well as the other environment variables needed by fis-gtm to run.
-      add_custom_target(${target_object_file}
-        DEPENDS FreshVistA
+      add_custom_command(
+        OUTPUT ${target_object_file_with_path}
+        DEPENDS ${source_routine_file_with_path}
         WORKING_DIRECTORY ${TEST_VISTA_FRESH_GTM_OBJECT_DIR}
         COMMAND  ${GTM_DIST}/mumps -object=${target_object_file_with_path} ${source_routine_file_with_path}
         )
-      add_dependencies(${target_object_file} FreshVistA)
-      add_dependencies(CompileMRoutines ${target_object_file})
-    endforeach()
+      list(APPEND list_of_object_files ${target_object_file_with_path})
+    endforeach(mroutine)
+
+    add_library(vista-foia SHARED ${list_of_object_files})
+    set_property(TARGET vista-foia PROPERTY LINKER_LANGUAGE C)
+    add_dependencies(vista-foia FreshVistA)
+
   endif()
 
 else()

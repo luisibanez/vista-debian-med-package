@@ -19,6 +19,7 @@ GTM_INSTALL_DIR=/usr/lib/fis-gtm/$(UAPIDIR)
 VISTA_GLOBALS_DIR=$(VISTAINSTANCEDIR)/g
 VISTA_ROUTINES_DIR=$(VISTAINSTANCEDIR)/r
 VISTA_OBJECTS_DIR=$(VISTAINSTANCEDIR)/o
+VISTA_LIBRARY_DIR=$(VISTAINSTANCEDIR)/lib
 VISTA_GTM_DATABASE=$(VISTAINSTANCEDIR)/g/database
 # The libgtmutil.so file only exist in the x64 architecture.
 # We need to add here the x86 alternative.
@@ -39,6 +40,7 @@ override_dh_auto_configure:
 	mkdir -p $(VISTA_TESTING_BINARY_DIR)
 	mkdir -p $(VISTA_ROUTINES_DIR)
 	mkdir -p $(VISTA_OBJECTS_DIR)
+	mkdir -p $(VISTA_LIBRARY_DIR)
 	mkdir -p $(VISTA_GLOBALS_DIR)
 	mkdir -p $(VISTAINSTANCEDIR)/inet
 	mkdir -p $(VISTAINSTANCEDIR)/inet/Logs

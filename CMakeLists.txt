@@ -17,6 +17,11 @@ cmake_minimum_required(VERSION 2.8.0)
 project(VISTA NONE)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake ${CMAKE_MODULE_PATH})
 
+option(VISTA_PRECOMPILE_ALL_ROUTINES "Pre-compile all the M routines" OFF)
+if(VISTA_PRECOMPILE_ALL_ROUTINES)
+  enable_language(C)
+endif()
+
 include(CTest)
 
 # We do not install anything, so hide the install prefix option.
