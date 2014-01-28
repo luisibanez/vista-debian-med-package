@@ -87,7 +87,7 @@ if(VISTA_HAVE_BUILD_TOOL)
       add_dependencies(${target_object_file} FreshVistA)
       add_dependencies(CompileMRoutines ${target_object_file})
     endforeach()
-  else()
+  endif()
 
 else()
   set_property(GLOBAL APPEND PROPERTY VISTA_BUILD_SCRIPTS ${CMAKE_CURRENT_BINARY_DIR}/ImportRG.cmake)
