@@ -22,7 +22,7 @@ VISTA_GTM_DATABASE=$(VISTAINSTANCEDIR)/g/database
 # The libgtmutil.so file only exist in the x64 architecture.
 # We need to add here the x86 alternative.
 VISTA_GTM_ROUTINES_ARCH=$(GTM_INSTALL_DIR)/libgtmutil.so
-VISTA_GTM_ROUTINES="$(VISTA_OBJECTS_DIR)($(VISTA_ROUTINES_DIR)) $(VISTA_GTM_ROUTINES_ARCH)"
+VISTA_GTM_ROUTINES="$(VISTA_OBJECTS_DIR)($(VISTA_ROUTINES_DIR)) $(VISTA_GTM_ROUTINES_ARCH) $(GTM_INSTALL_DIR)"
 VISTA_M_WORKING_TREE=$(CURDIR)/OSEHRA-VistA-M-897bff2
 VISTA_TESTING_BINARY_DIR=$(CURDIR)/debian/build
 VISTA_TESTING_SOURCE_DIR=$(CURDIR)
@@ -33,36 +33,6 @@ LOCAL_VISTA_INSTALL_DIR := $(CURDIR)/debian/$(BINPKG)/$(VISTA_INSTALL_DIR)
 	dh $@
 
 
-#
-#  Bring in the full list of VistA M routines
-#  and place them in the vista_m_sources variable
-#
-include debian/vista_m_routines_list
-
-#
-#  Define the default paths for finding .m files and .o files
-#
-vpath %.m $(VISTA_ROUTINES_DIR)
-vpath %.o $(VISTA_OBJECTS_DIR)
-vpath %.log $(VISTA_TESTING_LOG_DIR)
-
-#
-#  Implicit rule to compile MUMPS files into object files
-#
-#  http://tinco.pair.com/bhaskar/gtm/doc/books/pg/UNIX_manual/ch03s05.html#Compile_from_Shell
-#
-%.o : %.m
-	echo $< -o $(VISTA_OBJECTS_DIR)/$(@F)
-	(export gtmgbldir=$(VISTA_GTM_DATABASE); \
-export gtmroutines=$(VISTA_GTM_ROUTINES); \
-export gtm_dist=$(GTM_INSTALL_DIR); \
-export gtm_destdir=$(LOCALINSTANCEDIR); \
-$(GTM_INSTALL_DIR)/mumps -object=$(VISTA_OBJECTS_DIR)/$(@F)  $<  )
-
-vista_m_sources := $(patsubst %.m,$(VISTA_ROUTINES_DIR)/%.m,$(vista_m_sources_files))
-vista_o_objects_files := $(patsubst %.m,%.o,$(vista_m_sources_files))
-
-
 override_dh_auto_configure:
 	mkdir -p $(VISTAINSTANCEDIR)
 	mkdir -p $(VISTA_TESTING_BINARY_DIR)
@@ -71,10 +41,10 @@ override_dh_auto_configure:
 	mkdir -p $(VISTA_GLOBALS_DIR)
 	mkdir -p $(VISTAINSTANCEDIR)/inet
 	mkdir -p $(VISTAINSTANCEDIR)/inet/Logs
+	cp -r debian/deploy $(VISTAINSTANCEDIR)
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); echo "change -s DEFAULT -f=$(VISTAINSTANCEDIR)/g/database" | $(GTM_INSTALL_DIR)/mumps -r GDE)
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/mupip create)
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR); $(GTM_INSTALL_DIR)/dse change -f -key_max=1023 -rec=4096)
-	cp -r debian/deploy $(VISTAINSTANCEDIR)
 	(export gtmgbldir=$(VISTA_GTM_DATABASE); export gtmroutines=$(VISTA_GTM_ROUTINES); export gtm_dist=$(GTM_INSTALL_DIR);  \
 cd $(VISTA_TESTING_BINARY_DIR) && \
 cmake $(VISTA_TESTING_SOURCE_DIR)   \
