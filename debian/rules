@@ -96,12 +96,12 @@ git clone git+ssh://git.debian.org/git/debian-med/vista.git && \
 cd vista && \
 git archive -o ../debian-vista.tar.gz --format tar.gz HEAD  && \
 cd .. && \
-mkdir -p OSEHRA-VistA-fdc8ff2 && \
-cd OSEHRA-VistA-fdc8ff2 && \
+mkdir -p OSEHRA-VistA-117cc3fc && \
+cd OSEHRA-VistA-117cc3fc && \
 tar -xzf ../debian-vista.tar.gz && \
 tar -xzf ../OSEHRA-VistA-M-897bff2a.orig.tar.gz &&  \
 cd .. && \
-tar -czf vista-foia_0.20140106.orig.tar.gz OSEHRA-VistA-fdc8ff2 \
+tar -czf vista-foia_0.20140106.orig.tar.gz OSEHRA-VistA-117cc3fc \
 )
 
 describe-current-version:
