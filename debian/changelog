@@ -35,5 +35,6 @@ vista-foia (0.20140106-1) UNRELEASED; urgency=low
   * Added CMake option to precompile all M routines, as part of build.
   * In rules, only installing selected directories. Skipping .o files.
   * In rules, enabled parallel build.
+  * In rules, added VISTA_FOIA_VERSION to installation directory path.
 
  -- Luis Ibanez <luis.ibanez@kitware.com>  Wed, 4 Jul 2012 17:16:45 -0500
