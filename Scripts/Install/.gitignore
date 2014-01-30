@@ -1,0 +1,6 @@
+# Do not add vagrant generated folders
+.vagrant/
+
+# Do not add generated key scripts
+EC2.sh
+Rackspace.sh

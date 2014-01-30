@@ -100,6 +100,9 @@ elseif(CCONTROL_EXECUTABLE)
   include(UseCache)
 endif()
 
+#-----------------------------------------------------------------------------#
+##### SECTION TO SETUP THE XINDEX TESTING` #####
+#-----------------------------------------------------------------------------#
 include(CommonFunctions)
 option(TEST_VISTA_XINDEX "Run XINDEX on every routine in every package" ON)
 if(TEST_VISTA_XINDEX)
@@ -108,10 +111,26 @@ if(TEST_VISTA_XINDEX)
   foreach(package_file_name ${PACKAGES})
     #Configures the CMAKE testing
     set(LOGFILENAME "@TEST_VISTA_OUTPUT_DIR@/@package_file_name@Test.log")
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake @ONLY)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.py.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.py @ONLY)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.cmake.in ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.cmake @ONLY)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.py.in ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.py @ONLY)
     #Creates the command that will be called for the Test
-    add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake)
+    add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.cmake)
+  endforeach()
+endif()
+
+#-----------------------------------------------------------------------------#
+##### SECTION TO SETUP THE FILEMAN "VERIFY FIELDS" TESTING #####
+#-----------------------------------------------------------------------------#
+option(TEST_VISTA_VERIFYFIELDS "Run the 'Verify Fields' FileMan Utility on every file in each package" OFF)
+mark_as_advanced(TEST_VISTA_VERIFYFIELDS)
+if(TEST_VISTA_VERIFYFIELDS)
+  FindPackages(${VISTA_SOURCE_DIR})
+  foreach(package_file_name ${PACKAGES})
+    # Configures the CMAKE testing
+    set(LOGFILENAME "@TEST_VISTA_OUTPUT_DIR@/@package_file_name@VFTest.log")
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/VerifyFields.py.in ${VISTA_BINARY_DIR}/Testing/VerifyFields/${package_file_name}VFTest.py @ONLY)
+    # Creates the command that will be called for the Test
+    add_test(VerifyFields_${package_file_name} ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/VerifyFields/${package_file_name}VFTest.py)
   endforeach()
 endif()
 
@@ -221,10 +240,14 @@ add_test(PYTHON_PrefixParser ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Py
 #-----------------------------------------------------------------------------#
 file(GLOB PyUnitTests ${VISTA_SOURCE_DIR}/Scripts/Testing/PyUnit/Test*.py)
 configure_file("${VISTA_SOURCE_DIR}/Scripts/Testing/PyUnit/RPCBrokerCheck.py.in" "${VISTA_SOURCE_DIR}/Scripts/Testing/PyUnit/RPCBrokerCheck.py")
+set(VendorArgs "")
+SetVendorArgs(VendorArgs)
 foreach(PyUnitTest ${PyUnitTests})
   get_filename_component(PyUnitTestName "${PyUnitTest}" NAME_WE)
   if(${PyUnitTestName} STREQUAL "TestSSEP")
     set(ARGUMENTS ${VISTA_TCP_HOST} ${VISTA_TCP_PORT})
+  elseif("${PyUnitTestName}" MATCHES "TestClient$")
+    set(ARGUMENTS "${VendorArgs}")
   endif()
   add_test(PyUnitTest_${PyUnitTestName} ${PYTHON_EXECUTABLE} ${PyUnitTest} ${ARGUMENTS})
   set_tests_properties(PyUnitTest_${PyUnitTestName}
@@ -237,3 +260,11 @@ endforeach()
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Python/MenuTraversalTest.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalTest.py")
 add_test(PYTHON_MenuTraversal ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalTest.py")
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Python/MenuTraversalSmokeTest.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalSmokeTest.py")
+
+#-----------------------------------------------------------------------------#
+##### SECTION TO ADD USER GENERATED TESTS #####
+#-----------------------------------------------------------------------------#
+option(TEST_VISTA_USERTEST "Add tests from the Testing/UserTest/CMakeLists.txt file?" OFF)
+if(TEST_VISTA_USERTEST)
+  add_subdirectory(UserTest)
+endif()
