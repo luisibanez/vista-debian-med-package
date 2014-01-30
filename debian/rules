@@ -88,12 +88,18 @@ override_dh_auto_install:
 
 
 get-orig-source:
-	wget -O../OSEHRA-VistA-M-897bff2a.orig.tar.gz https://github.com/OSEHRA/VistA-M/tarball/897bff2a
-	wget -O../vista-foia_0.20140106.infrastructure.orig.tar.gz   https://github.com/OSEHRA/VistA/tarball/fdc8ff2b
-	(cd .. &&  mkdir -p vista-foia-orig-source && cd vista-foia-orig-source && \
-tar -xzf ../vista-foia_0.20140106.infrastructure.orig.tar.gz &&  \
+	(cd .. && \
+mkdir -p vista-foia-orig-source && \
+cd vista-foia-orig-source && \
+wget -O./OSEHRA-VistA-M-897bff2a.orig.tar.gz https://github.com/OSEHRA/VistA-M/tarball/897bff2a && \
+git clone git+ssh://git.debian.org/git/debian-med/vista.git && \
+cd vista && \
+git archive -o ../debian-vista.tar.gz --format tar.gz HEAD  && \
+cd .. && \
+mkdir -p OSEHRA-VistA-fdc8ff2 && \
 cd OSEHRA-VistA-fdc8ff2 && \
-tar -xzf ../../OSEHRA-VistA-M-897bff2a.orig.tar.gz &&  \
+tar -xzf ../debian-vista.tar.gz && \
+tar -xzf ../OSEHRA-VistA-M-897bff2a.orig.tar.gz &&  \
 cd .. && \
 tar -czf vista-foia_0.20140106.orig.tar.gz OSEHRA-VistA-fdc8ff2 \
 )
