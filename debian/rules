@@ -92,9 +92,9 @@ get-orig-source:
 	wget -O../vista-foia_0.20140106.infrastructure.orig.tar.gz   https://github.com/OSEHRA/VistA/tarball/fdc8ff2b
 	(cd .. &&  mkdir -p vista-foia-orig-source && cd vista-foia-orig-source && \
 tar -xzf ../vista-foia_0.20140106.infrastructure.orig.tar.gz &&  \
-cd OSEHRA-VistA-fdc8ff2 \
+cd OSEHRA-VistA-fdc8ff2 && \
 tar -xzf ../../OSEHRA-VistA-M-897bff2a.orig.tar.gz &&  \
-cd ../.. && \
+cd .. && \
 tar -czf vista-foia_0.20140106.orig.tar.gz OSEHRA-VistA-fdc8ff2 \
 )
 
