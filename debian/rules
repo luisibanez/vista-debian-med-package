@@ -80,15 +80,23 @@ cd $(VISTA_TESTING_BINARY_DIR) && make)
 
 override_dh_auto_install:
 	mkdir -p debian/$(BINPKG)/$(DESTINATION_DIR)
-	cp -r  $(LOCALINSTANCEDIR)/$(VISTA_INSTALL_DIR)/r    debian/$(BINPKG)/$(DESTINATION_DIR)
-	cp -r  $(LOCALINSTANCEDIR)/$(VISTA_INSTALL_DIR)/g    debian/$(BINPKG)/$(DESTINATION_DIR)
-	cp -r  $(LOCALINSTANCEDIR)/$(VISTA_INSTALL_DIR)/lib  debian/$(BINPKG)/$(DESTINATION_DIR)
-	cp -r  $(LOCALINSTANCEDIR)/$(VISTA_INSTALL_DIR)/inet debian/$(BINPKG)/$(DESTINATION_DIR)
+	cp -r  $(LOCALINSTANCEDIR)/$(VISTA_INSTALL_DIR)/r       debian/$(BINPKG)/$(DESTINATION_DIR)
+	cp -r  $(LOCALINSTANCEDIR)/$(VISTA_INSTALL_DIR)/g       debian/$(BINPKG)/$(DESTINATION_DIR)
+	cp -r  $(LOCALINSTANCEDIR)/$(VISTA_INSTALL_DIR)/lib     debian/$(BINPKG)/$(DESTINATION_DIR)
+	cp -r  $(LOCALINSTANCEDIR)/$(VISTA_INSTALL_DIR)/inet    debian/$(BINPKG)/$(DESTINATION_DIR)
+	cp -r  $(LOCALINSTANCEDIR)/$(VISTA_INSTALL_DIR)/deploy  debian/$(BINPKG)/$(DESTINATION_DIR)
 
 
 get-orig-source:
 	wget -O../OSEHRA-VistA-M-897bff2a.orig.tar.gz https://github.com/OSEHRA/VistA-M/tarball/897bff2a
-	wget -O../vista-foia_0.20140106.orig.tar.gz   https://github.com/OSEHRA/VistA/tarball/fdc8ff2b
+	wget -O../vista-foia_0.20140106.infrastructure.orig.tar.gz   https://github.com/OSEHRA/VistA/tarball/fdc8ff2b
+	(cd .. &&  mkdir -p vista-foia-orig-source && cd vista-foia-orig-source && \
+tar -xzf ../vista-foia_0.20140106.infrastructure.orig.tar.gz &&  \
+cd OSEHRA-VistA-fdc8ff2 \
+tar -xzf ../../OSEHRA-VistA-M-897bff2a.orig.tar.gz &&  \
+cd ../.. && \
+tar -czf vista-foia_0.20140106.orig.tar.gz OSEHRA-VistA-fdc8ff2 \
+)
 
 describe-current-version:
 	git describe --tags upstream | sed 's,^release-,,;s,-,+,;s,-,~,;'
