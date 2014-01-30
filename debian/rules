@@ -32,7 +32,7 @@ VISTA_TESTING_LOG_DIR=$(VISTA_TESTING_BINARY_DIR)/Temporary/Log
 
 
 %:
-	dh $@
+	dh $@ --parallel
 
 
 override_dh_auto_configure:
